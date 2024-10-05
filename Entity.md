@@ -8,10 +8,11 @@
 - `username` (VARCHAR(50), UNIQUE, NOT NULL) — логин пользователя.
 - `password` (VARCHAR(255), NOT NULL) — пароль.
 - `email` (VARCHAR(100), UNIQUE, NOT NULL) — электронная почта.
-- `role` (VARCHAR(50), NOT NULL) — роль пользователя.
+- `is_superuser` (BOOLEAN, NOT NULL) — роль пользователя.
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP) — дата регистрации.
 
 **Связи:**
+- `subscription_id` — связь с таблицей `Subscriptions` (один к одному).
 - Один ко многим с таблицей `ActionLogs`.
 - Один ко многим с таблицей `CurrentReads`.
 - Один ко многим с таблицей `Reviews`.
@@ -110,7 +111,7 @@
 - `end_date` (DATE) — дата окончания подписки.
 
 **Связи:**
-- `user_id` — связь с таблицей `User` (один к одному).
+- Один к одному с таблицей `Users`.
 
 ---
 
