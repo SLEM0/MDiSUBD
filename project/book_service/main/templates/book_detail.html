@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock title %}
+{% block header %}{{ book.title }}{% endblock header %}
+{% block content %}
+
+<p><strong>Автор:</strong> {{ book.author_name }}</p>
+<p><strong>Издательство:</strong> {{ book.publisher_name }}</p>
+<p><strong>Год публикации:</strong> {{ book.publication_year }}</p>
+<p><strong>Количество страниц:</strong> {{ book.pages }}</p>
+<p><strong>Рейтинг книги:</strong> {{ book.average_rating }}</p>
+
+<h3>Жанры</h3>
+<ul>
+    {% for genre in book.genres %}
+        <li>{{ genre }}</li>
+    {% empty %}
+        <li>Жанры не указаны</li>
+    {% endfor %}
+</ul>
+
+<h3>Описание</h3>
+<p>{{ book.description }}</p>
+
+<!-- Секция отзывов -->
+<h3>Отзывы</h3>
+<ul>
+    {% for review in reviews %}
+        <li>
+            <p><strong>Рейтинг:</strong> {{ review.0 }} / 5</p>
+            <p><strong>Пользователь:</strong> {{ review.3 }}</p>
+            <p><strong>Дата:</strong> {{ review.2|date:"d M Y H:i" }}</p>
+            <p><strong>Комментарий:</strong> {{ review.1 }}</p>
+        </li>
+    {% empty %}
+        <p>Пока нет отзывов на эту книгу.</p>
+    {% endfor %}
+</ul>
+
+<!-- Секция для отображения сообщений -->
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            <p style="color: red;" class="{% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Кнопка "Читать книгу" -->
+<form method="POST" action="{% url 'add_to_my_readings' book.id %}">
+    {% csrf_token %}
+    <button type="submit">Читать книгу</button>
+</form>
+
+<!-- Кнопка "Добавить в Читать позже" -->
+<form method="POST" action="{% url 'add_to_read_later' book.id %}">
+    {% csrf_token %}
+    <button type="submit">Добавить в "Читать позже"</button>
+</form>
+
+<a href="{% url 'book_catalog' %}">Вернуться к каталогу</a>
+{% endblock content %}

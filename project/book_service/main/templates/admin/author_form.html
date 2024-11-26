@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.id %}Редактировать автора{% else %}Добавить автора{% endif %}{% endblock title %}
+{% block header %}{% if form.instance.id %}Редактировать автора{% else %}Добавить автора{% endif %}{% endblock header %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" value="{{ author.name|default_if_none:'' }}" required><br>
+
+    <label for="date_of_birth">Дата рождения:</label>
+    <input type="date" id="date_of_birth" name="date_of_birth" value="{{ author.date_of_birth|date:'Y-m-d'|default_if_none:'' }}"><br>
+
+    <label for="biography">Биография:</label>
+    <textarea id="biography" name="biography">{{ author.biography|default_if_none:'' }}</textarea><br>
+
+    <button type="submit">{% if author %}Обновить{% else %}Добавить{% endif %}</button>
+</form>
+
+<a href="{% url 'admin_authors_list' %}">Назад к списку авторов</a>
+{% endblock content %}

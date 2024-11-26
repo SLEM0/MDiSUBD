@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default title{% endblock title %}</title>
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="{% url 'book_catalog' %}">Каталог | </a>
+            <a href="{% url 'profile' %}">Профиль</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1 >{% block header %}{% endblock header %}</h1>
+        {% block content %}{% endblock content %}
+    </main>
+</body>
+</html>

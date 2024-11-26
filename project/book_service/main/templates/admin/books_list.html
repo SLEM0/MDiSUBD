@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Список книг{% endblock title %}
+{% block header %}Список книг{% endblock header %}
+{% block content %}
+<a href="{% url 'admin_add_book' %}">Добавить книгу</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Год публикации</th>
+            <th>Автор</th>
+            <th>Издательство</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1 }}</td>
+            <td>{{ book.2 }}</td>
+            <td>{{ book.3 }}</td>
+            <td>{{ book.4 }}</td>
+            <td>
+                <a href="{% url 'admin_edit_book' book.0 %}">Редактировать</a> |
+                <a href="{% url 'admin_delete_book' book.0 %}" onclick="return confirm('Вы уверены?')">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

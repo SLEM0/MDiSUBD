@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Подписка{% endblock title %}
+{% block header %}Подписка{% endblock header %}
+{% block content %}
+{% if subscription_info %}
+    <p>У вас уже есть подписка.</p>
+    <p><strong>Дата начала:</strong> {{ subscription_info.start_date }}</p>
+    <p><strong>Дата окончания:</strong> {{ subscription_info.end_date }}</p>
+{% else %}
+    <p>У вас нет активной подписки.</p>
+    <p>Выберите один из вариантов подписки:</p>
+
+    <!-- Кнопки для создания подписки на 3, 6 и 12 месяцев -->
+    <form method="post" action="{% url 'create_subscription' 3 %}">
+        {% csrf_token %}
+        <button type="submit">Подписка на 3 месяца</button>
+    </form>
+    <form method="post" action="{% url 'create_subscription' 6 %}">
+        {% csrf_token %}
+        <button type="submit">Подписка на 6 месяцев</button>
+    </form>
+    <form method="post" action="{% url 'create_subscription' 12 %}">
+        {% csrf_token %}
+        <button type="submit">Подписка на 12 месяцев</button>
+    </form>
+{% endif %}
+{% endblock content %}

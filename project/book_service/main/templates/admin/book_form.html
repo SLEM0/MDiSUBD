@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.id %}Редактировать книгу{% else %}Добавить книгу{% endif %}{% endblock title %}
+{% block header %}{% if form.instance.id %}Редактировать книгу{% else %}Добавить книгу{% endif %}{% endblock header %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="title">Название:</label>
+    <input type="text" id="title" name="title" value="{{ book.title|default_if_none:'' }}" required><br>
+
+    <label for="publication_year">Год публикации:</label>
+    <input type="number" id="publication_year" name="publication_year" value="{{ book.publication_year|default_if_none:'' }}" required><br>
+
+    <label for="author">Автор:</label>
+    <select id="author" name="author" required>
+        {% for author in authors %}
+        <option value="{{ author.0 }}" {% if book and author.0 == book.6 %}selected{% endif %}>{{ author.1 }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="publisher">Издательство:</label>
+    <select id="publisher" name="publisher" required>
+        {% for publisher in publishers %}
+        <option value="{{ publisher.0 }}" {% if book and publisher.0 == book.7 %}selected{% endif %}>{{ publisher.1 }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="description">Описание:</label>
+    <textarea id="description" name="description">{{ book.description|default_if_none:'' }}</textarea><br>
+
+    <label for="subscription_only">Только для подписчиков:</label>
+    <input type="checkbox" id="subscription_only" name="subscription_only" {% if book and book.subscription_only %}checked{% endif %}><br>
+
+    <label for="pages">Количество страниц:</label>
+    <input type="number" id="pages" name="pages" value="{{ book.pages|default_if_none:'' }}"><br>
+
+    <!-- Поле для выбора жанров -->
+    <label for="genres">Жанры:</label>
+    <select id="genres" name="genres" multiple>
+        {% for genre in genres %}
+        <option value="{{ genre.0 }}" {% if book_genres and genre.0 in book_genres %}selected{% endif %}>{{ genre.1 }}</option>
+        {% endfor %}
+    </select><br>
+
+    <button type="submit">{% if book %}Обновить{% else %}Добавить{% endif %}</button>
+</form>
+
+<a href="{% url 'admin_books_list' %}">Назад к списку книг</a>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock title %}
+{% block header %}Профиль{% endblock header %}
+{% block content %}
+<h2>Книги в "Мои чтения": {{ current_reads_count }}</h2>
+<h2>Книги в "Читать позже": {{ read_later_count }}</h2>
+
+<h3>Прогресс чтения:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название книги</th>
+            <th>Прочитано страниц</th>
+            <th>Всего страниц</th>
+            <th>Прогресс (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in book_progress %}
+        <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1 }}</td>
+            <td>{{ book.2 }}</td>
+            <td>{{ book.3|floatformat:2 }}%</td> <!-- Рассчитываем прогресс в процентах -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Количество оставленных отзывов: {{ reviews_count }}</h3>
+
+<h3>Средний рейтинг, который вы поставили: {% if average_rating %}{{ average_rating|floatformat:1 }}{% else %}N/A{% endif %}</h3>
+
+<h3>Общее количество прочитанных страниц: {{ total_pages_read }}</h3>
+{% endblock content %}

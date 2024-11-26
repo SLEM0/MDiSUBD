@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock title %}
+{% block header %}Профиль{% endblock header %}
+{% block content %}
+{% if is_authenticated %}
+        <p>Имя пользователя: {{ username }}</p>
+        <p>Электронная почта: {{ email }}</p>
+
+        {% if is_superuser %}
+            <p><a href="{% url 'admin_books_list' %}">CRUD книги</a></p>
+            <p><a href="{% url 'admin_genres_list' %}">CRUD жанры</a></p>
+            <p><a href="{% url 'admin_authors_list' %}">CRUD авторы</a></p>
+            <p><a href="{% url 'admin_publishers_list' %}">CRUD издательства</a></p>
+            <p><a href="{% url 'admin_create_user' %}">Создать пользователя</a></p>
+            <p><a href="{% url 'admin_statistics' %}">Статистика</a></p>
+        {% else %}
+            <p><a href="{% url 'my_readings' %}">Мои чтения</a></p>
+            <p><a href="{% url 'read_later' %}">Читать позже</a></p>
+            <p><a href="{% url 'user_subscription' %}">Подписка</a></p>
+            <p><a href="{% url 'user_statistics' %}">Статистика</a></p>
+        {% endif %}
+
+        <p><a href="{% url 'logout' %}">Выход</a></p>
+    {% else %}
+        <p>Вы не авторизованы.</p>
+        <p><a href="{% url 'login' %}">Вход</a></p>
+        <p><a href="{% url 'register' %}">Регистрация</a></p>
+    {% endif %}
+{% endblock content %}

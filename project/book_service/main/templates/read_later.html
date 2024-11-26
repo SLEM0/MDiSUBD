@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Читать позже{% endblock title %}
+{% block header %}Читать позже{% endblock header %}
+{% block content %}
+<ul>
+    {% for book in read_later_books %}
+        <li>
+            <p>{{ book.1 }}</p>
+            <form method="POST" action="{% url 'move_to_my_readings' book.0 %}">
+                {% csrf_token %}
+                <button type="submit">Добавить в "Мои чтения"</button>
+            </form>
+            <form method="POST" action="{% url 'delete_from_read_later' book.0 %}">
+                {% csrf_token %}
+                <button type="submit">Удалить</button>
+            </form>
+        </li>
+    {% empty %}
+        <p>Список пуст.</p>
+    {% endfor %}
+</ul>
+{% endblock content %}

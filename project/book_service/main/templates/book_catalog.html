@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Каталог книг{% endblock title %}
+{% block header %}Каталог книг{% endblock header %}
+{% block content %}
+<!-- Форма для фильтрации и сортировки -->
+<form method="GET">
+
+    <h3>Фильтрация по авторам</h3>
+    <select name="author" multiple>
+        {% for author in authors %}
+            <option value="{{ author.id }}" {% if author.id in selected_authors %}selected{% endif %}>{{ author.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Фильтрация по издательствам</h3>
+    <select name="publisher" multiple>
+        {% for publisher in publishers %}
+            <option value="{{ publisher.id }}" {% if publisher.id in selected_publishers %}selected{% endif %}>{{ publisher.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Фильтрация по жанрам</h3>
+    <select name="genre" multiple>
+        {% for genre in genres %}
+            <option value="{{ genre.id }}" {% if genre.id in selected_genres %}selected{% endif %}>{{ genre.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Год публикации</h3>
+    <label for="min_year">Мин:</label>
+    <input type="number" name="min_year" id="min_year" value="{{ min_year }}">
+    <label for="max_year">Макс:</label>
+    <input type="number" name="max_year" id="max_year" value="{{ max_year }}">
+
+    <h3>Количество страниц</h3>
+    <label for="min_pages">Мин:</label>
+    <input type="number" name="min_pages" id="min_pages" value="{{ min_pages }}">
+    <label for="max_pages">Макс:</label>
+    <input type="number" name="max_pages" id="max_pages" value="{{ max_pages }}"><br>
+
+    <label for="without_subscription">Без подписки:</label>
+    <input type="checkbox" name="without_subscription" id="without_subscription" {% if without_subscription %}checked{% endif %}><br>
+
+    <label for="sort">Упорядочить:</label>
+    <select name="sort" id="sort">
+        <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Названию</option>
+        <option value="year" {% if sort_by == 'year' %}selected{% endif %}>Году публикации</option>
+        <option value="pages" {% if sort_by == 'pages' %}selected{% endif %}>Количество страниц</option>
+    </select><br>
+
+    <button type="submit">Применить</button>
+</form>
+
+<ul>
+    {% for book in books %}
+        <li>
+            <h2>{{ book.title }}</h2>
+            <p><strong>Год публикации:</strong> {{ book.publication_year }}</p>
+            <p><strong>Количество страниц:</strong> {{ book.pages }}</p>
+            <p><strong>Описание:</strong> {{ book.description }}</p>
+            <a href="{% url 'book_detail' book.id %}">Подробнее</a>
+        </li>
+    {% empty %}
+        <p>Нет доступных книг.</p>
+    {% endfor %}
+</ul>
+{% endblock content %}

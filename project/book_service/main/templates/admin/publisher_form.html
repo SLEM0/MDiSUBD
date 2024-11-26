@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.id %}Редактировать издательство{% else %}Добавить издательство{% endif %}{% endblock title %}
+{% block header %}{% if form.instance.id %}Редактировать издательство{% else %}Добавить издательство{% endif %}{% endblock header %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">Название:</label>
+    <input type="text" id="name" name="name" value="{{ publisher.name|default_if_none:'' }}" required><br>
+
+    <label for="country">Страна:</label>
+    <input type="text" id="country" name="country" value="{{ publisher.country|default_if_none:'' }}"><br>
+
+    <label for="founded_year">Год основания:</label>
+    <input type="number" id="founded_year" name="founded_year" value="{{ publisher.founded_year|default_if_none:'' }}"><br>
+
+    <button type="submit">{% if publisher %}Обновить{% else %}Добавить{% endif %}</button>
+</form>
+
+<a href="{% url 'admin_publishers_list' %}">Назад к списку издательств</a>
+{% endblock content %}

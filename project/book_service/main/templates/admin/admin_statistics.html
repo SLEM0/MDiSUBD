@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Статистика{% endblock title %}
+{% block header %}Статистика{% endblock header %}
+{% block content %}
+<h2>Общее количество пользователей: {{ total_users }}</h2>
+<h2>Количество активных подписчиков: {{ active_subscribers }}</h2>
+
+<h3>Топ-5 самых популярных книг:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название книги</th>
+            <th>Количество добавлений в "Мои чтения"</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in popular_books %}
+        <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Количество книг по жанрам:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Жанр</th>
+            <th>Количество книг</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for genre in books_by_genres %}
+        <tr>
+            <td>{{ genre.0 }}</td>
+            <td>{{ genre.1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Топ-5 книг с наибольшим количеством отзывов:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название книги</th>
+            <th>Количество отзывов</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in top_books_by_reviews %}
+        <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Топ-5 самых активных пользователей:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Количество отзывов</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in top_active_users %}
+        <tr>
+            <td>{{ user.0 }}</td>
+            <td>{{ user.1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

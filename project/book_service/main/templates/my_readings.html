@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Мои чтения{% endblock title %}
+{% block header %}Мои чтения{% endblock header %}
+{% block content %}
+{% if current_readings %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Название книги</th>
+                <th>Всего страниц</th>
+                <th>Прочитано страниц</th>
+                <th>Дата добавления</th>
+                <th>Добавить отзыв</th>
+                <th>Читать</th>
+                <th>Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reading in current_readings %}
+                <tr>
+                    <td>{{ reading.0 }}</td>  <!-- Название книги -->
+                    <td>{{ reading.1 }}</td>  <!-- Всего страниц -->
+                    <td>{{ reading.2 }}</td>  <!-- Прочитано страниц -->
+                    <td>{{ reading.3 }}</td>  <!-- Дата добавления -->
+                    <td><a href="{% url 'add_review' reading.4 %}">Добавить отзыв</a></td> <!-- Ссылка на добавление отзыва -->
+                    <td><a href="{% url 'read_book' reading.4 %}">Читать</a></td> <!-- Ссылка на чтение книги -->
+                    <td>
+                        <form method="POST" action="{% url 'delete_from_my_readings' reading.4 %}">
+                            {% csrf_token %}
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td> <!-- Кнопка для удаления книги из чтений -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Вы пока не читаете ни одной книги.</p>
+{% endif %}
+{% endblock content %}

@@ -10,6 +10,7 @@
 - `email` (VARCHAR(100), UNIQUE, NOT NULL) — электронная почта.
 - `is_superuser` (BOOLEAN, NOT NULL) — роль пользователя.
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP) — дата регистрации.
+- `subscription_id` (INT, FK) - подписка (может быть NULL).
 
 **Связи:**
 - `subscription_id` — связь с таблицей `Subscriptions` (один к одному).
@@ -106,7 +107,6 @@
 **Таблица:** `Subscriptions`  
 **Поля:**
 - `id` (INT, PK, AUTO_INCREMENT) — уникальный идентификатор подписки.
-- `user_id` (INT, FK, NOT NULL) — идентификатор пользователя.
 - `start_date` (DATE, NOT NULL) — дата начала подписки.
 - `end_date` (DATE) — дата окончания подписки.
 

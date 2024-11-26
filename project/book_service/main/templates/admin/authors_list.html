@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Список авторов{% endblock title %}
+{% block header %}Список авторов{% endblock header %}
+{% block content %}
+<a href="{% url 'admin_add_author' %}">Добавить автора</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Дата рождения</th>
+            <th>Биография</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.0 }}</td>
+            <td>{{ author.1 }}</td>
+            <td>{{ author.2 }}</td>
+            <td>{{ author.3 }}</td>
+            <td>
+                <a href="{% url 'admin_edit_author' author.0 %}">Редактировать</a> |
+                <a href="{% url 'admin_delete_author' author.0 %}" onclick="return confirm('Вы уверены?')">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
